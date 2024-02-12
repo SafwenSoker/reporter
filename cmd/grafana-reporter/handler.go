@@ -52,7 +52,12 @@ func RegisterHandlers(router *mux.Router, reportServerV4, reportServerV5 ServeRe
 
 func (h ServeReportHandler) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 	log.Print("Reporter called")
-	scheduler.Conrjob("default", "reporter", "grafana-reporter", "*/1 * * * *")
+	error := scheduler.Conrjob("default", "reporter", "grafana-reporter", "*/1 * * * *")
+	if error != nil {
+		log.Println("Error creating cronjob:", error)
+		http.Error(w, error.Error(), 500)
+		return
+	}
 	g := h.newGrafanaClient(*proto+*ip, apiToken(req), dashVariables(req), *sslCheck, *gridLayout)
 	rep := h.newReport(g, dashID(req), time(req), texTemplate(req), *gridLayout)
 
