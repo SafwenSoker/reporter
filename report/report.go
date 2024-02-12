@@ -28,6 +28,7 @@ import (
 
 	"github.com/IzakMarais/reporter/grafana"
 	"github.com/pborman/uuid"
+	"github.com/SafwenSoker/reporter/scheduler"
 )
 
 // Report groups functions related to genrating the report.
