@@ -44,7 +44,7 @@ func RegisterHandlers(router *mux.Router, reportServerV4, reportServerV5 ServeRe
 	router.Handle("/api/report/{dashId}", reportServerV4)
 	router.Handle("/api/v5/report/{dashId}", reportServerV5)
 	router.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(w, "This is grafana-reporter. \nThe API endpoints are documented here: https://github.com/IzakMarais/reporter#endpoint.")
+		fmt.Fprintf(w, "This is grafana-reporter. \nThe API endpoints are here: https://github.com/IzakMarais/reporter#endpoint.")
 	})
 
 }
