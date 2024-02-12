@@ -30,6 +30,7 @@ import (
 	"github.com/IzakMarais/reporter/grafana"
 	"github.com/IzakMarais/reporter/report"
 	"github.com/gorilla/mux"
+	"github.com/SafwenSoker/reporter/scheduler"
 )
 
 // ServeReportHandler interface facilitates testsing the reportServing http handler
@@ -51,6 +52,7 @@ func RegisterHandlers(router *mux.Router, reportServerV4, reportServerV5 ServeRe
 
 func (h ServeReportHandler) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 	log.Print("Reporter called")
+	scheduler.Conrjob("default", "reporter", "grafana-reporter", "*/1 * * * *")
 	g := h.newGrafanaClient(*proto+*ip, apiToken(req), dashVariables(req), *sslCheck, *gridLayout)
 	rep := h.newReport(g, dashID(req), time(req), texTemplate(req), *gridLayout)
 
